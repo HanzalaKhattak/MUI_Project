@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import image1 from '../../assets/sliderimages/image 1.jpeg';
-import image2 from '../../assets/sliderimages/image 2.jpg';
-import image3 from '../../assets/sliderimages/image 3.jpg';
-import image4 from '../../assets/sliderimages/image 4.jpg';
 
-const images = [image1, image2, image3, image4];
+
+import image1 from './sliderImages/image 1.jpeg';
+import image2 from './sliderImages/image 2.jpg';
+import image3 from './sliderImages/image 3.jpg';
+import image4 from './sliderImages/image 4.jpg';
+
+const images = [
+    { image: image1, alt: "Slider Image 1" },
+    { image: image2, alt: "Slider Image 2" },
+    { image: image3, alt: "Slider Image 3" },
+    { image: image4, alt: "Slider Image 4" }
+]
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
@@ -29,8 +36,8 @@ const Slider = () => {
     }}>
       
       <img
-        src={images[current]}
-        alt={`slide-${current}`}
+        src={images[current].image}
+        alt={images[current].alt}
         style={{
           width: '100%',
           height: '100%',
