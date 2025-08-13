@@ -8,7 +8,7 @@ import {
   Visibility as ViewAllIcon,
 } from '@mui/icons-material';
 import ViewOrders from './viewOrder/ViewOrders';
-import { MOCK_ORDERS } from './MockOrders';
+import { MOCK_ORDERS } from '../../reuseableComponents/jsons/MockOrders';
 
 // Constants for better maintainability
 const CARD_WIDTH = 280;

@@ -7,7 +7,7 @@ import {
   Close as CloseIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
-import { MOCK_ORDERS } from '../MockOrders';
+import { MOCK_ORDERS } from '../../../reuseableComponents/jsons/MockOrders';
 
 // Constants
 const ORDERS_PER_PAGE = 12;
