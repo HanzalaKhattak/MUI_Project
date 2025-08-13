@@ -1,10 +1,11 @@
 import React from 'react'
-import Toolkit from '../reuseableComponents/Toolkit'
+import Slider from './slider/Slider'
 
 const Home = () => {
   return (
     <>
-      <h1>Home</h1>
+      {/* <h1>Home</h1> */}
+      <Slider/>
     </>
   )
 }

@@ -47,7 +47,7 @@ const Toolkit = () => {
           <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: '#f5f5f5', px: 1, borderRadius: 1 }}>
             <InputBase
               placeholder={t('searchPlaceholder')}
-              sx={{ ml: 1, flex: 1, fontSize: 14 }}
+              sx={{ ml: 1, flex: 1, fontSize: 14, border: 2, p:1, borderRadius: 4 }}
               inputProps={{ 'aria-label': 'search' }}
             />
             <IconButton type="submit" sx={{ p: '6px' }} aria-label="search">
@@ -57,7 +57,6 @@ const Toolkit = () => {
           <IconButton color="inherit"><FavoriteBorderIcon /></IconButton>
           <IconButton color="inherit"><ShoppingCartOutlinedIcon /></IconButton>
           <IconButton color="inherit"><AccountCircleIcon /></IconButton>
-          <Button variant="outlined" sx={{ textTransform: 'none', borderRadius: 2, minWidth: 60 }}>{t('name')}</Button>
           <Button
             variant="outlined"
             sx={{ textTransform: 'none', borderRadius: 2, minWidth: 40 }}
