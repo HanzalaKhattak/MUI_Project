@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -8,45 +8,89 @@ import image2 from "./sliderImages/image 2.jpg";
 import image3 from "./sliderImages/image 3.jpg";
 import image4 from "./sliderImages/image 4.jpg";
 
-const images = [
+const IMAGES = [
   { image: image1, alt: "Slider Image 1" },
   { image: image2, alt: "Slider Image 2" },
   { image: image3, alt: "Slider Image 3" },
   { image: image4, alt: "Slider Image 4" },
 ];
 
+const SLIDE_INTERVAL = 3000;
+const TRANSITION_DURATION = 500;
+const SLIDER_HEIGHT = 400;
+
 const Slider = () => {
   const [current, setCurrent] = useState(1); 
   const [transition, setTransition] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const trackRef = useRef(null);
+  const timerRef = useRef(null);
 
-  const handlePrev = () => {
+  const slides = useMemo(() => [
+    IMAGES[IMAGES.length - 1], 
+    ...IMAGES,
+    IMAGES[0],
+  ], []);
+
+  const handlePrev = useCallback(() => {
     setCurrent((prev) => prev - 1);
-  };
-
-  const handleNext = () => {
-    setCurrent((prev) => prev + 1);
-  };
-
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      handleNext();
-    }, 3000);
-    return () => clearInterval(timer);
   }, []);
 
+  const handleNext = useCallback(() => {
+    setCurrent((prev) => prev + 1);
+  }, []);
 
-  const handleTransitionEnd = () => {
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+ 
+  const startTimer = useCallback(() => {
+    clearTimer();
+    timerRef.current = setInterval(() => {
+      handleNext();
+    }, SLIDE_INTERVAL);
+  }, [handleNext, clearTimer]);
+
+  useEffect(() => {
+    if (!isHovered) {
+      startTimer();
+    } else {
+      clearTimer();
+    }
+    
+    return clearTimer;
+  }, [isHovered, startTimer, clearTimer]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        clearTimer();
+      } else if (!isHovered) {
+        startTimer();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      clearTimer();
+    };
+  }, [isHovered, startTimer, clearTimer]);
+
+  const handleTransitionEnd = useCallback(() => {
     if (current === 0) {
       setTransition(false);
-      setCurrent(images.length); 
-    } else if (current === images.length + 1) {
+      setCurrent(IMAGES.length); 
+    } else if (current === IMAGES.length + 1) {
       setTransition(false);
       setCurrent(1); 
     }
-  };
-
+  }, [current]);
 
   useEffect(() => {
     if (!transition) {
@@ -57,21 +101,45 @@ const Slider = () => {
     }
   }, [transition]);
 
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+  }, []);
 
-  const slides = [
-    images[images.length - 1], 
-    ...images,
-    images[0],
-  ];
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handlePrev, handleNext]);
+
+  const isIndicatorActive = useCallback((idx) => {
+    return idx + 1 === current ||
+           (current === 0 && idx === IMAGES.length - 1) ||
+           (current === IMAGES.length + 1 && idx === 0);
+  }, [current]);
 
   return (
     <div
       style={{
         position: "relative",
         width: "100%",
-        height: "400px",
+        height: `${SLIDER_HEIGHT}px`,
         overflow: "hidden",
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
      
       <div
@@ -80,7 +148,7 @@ const Slider = () => {
           display: "flex",
           width: `${slides.length * 100}%`,
           transform: `translateX(-${current * (100 / slides.length)}%)`,
-          transition: transition ? "transform 0.5s ease-in-out" : "none",
+          transition: transition ? `transform ${TRANSITION_DURATION / 1000}s ease-in-out` : "none",
         }}
         onTransitionEnd={handleTransitionEnd}
       >
@@ -91,12 +159,15 @@ const Slider = () => {
             alt={img.alt}
             style={{
               width: `${100 / slides.length}%`,
-              height: "400px",
+              height: `${SLIDER_HEIGHT}px`,
               objectFit: "cover",
             }}
+            loading="lazy" 
             onError={(e) => {
-              e.target.src =
-                "https://via.placeholder.com/1200x400?text=No+Image";
+              const target = e.target;
+              if (target.src !== "https://via.placeholder.com/1200x400?text=No+Image") {
+                target.src = "https://via.placeholder.com/1200x400?text=No+Image";
+              }
             }}
           />
         ))}
@@ -113,22 +184,27 @@ const Slider = () => {
           zIndex: 2,
         }}
       >
-        {images.map((_, idx) => (
+        {IMAGES.map((_, idx) => (
           <span
             key={idx}
             style={{
               width: 10,
               height: 10,
               borderRadius: "50%",
-              background:
-                idx + 1 === current ||
-                (current === 0 && idx === images.length - 1) ||
-                (current === images.length + 1 && idx === 0)
-                  ? "#222"
-                  : "#bbb",
+              background: isIndicatorActive(idx) ? "#222" : "#bbb",
               display: "inline-block",
               transition: "background 0.3s",
+              cursor: "pointer",
             }}
+            onClick={() => setCurrent(idx + 1)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setCurrent(idx + 1);
+              }
+            }}
+            tabIndex={0}
+            role="button"
+            aria-label={`Go to slide ${idx + 1}`}
           />
         ))}
       </div>
@@ -145,6 +221,7 @@ const Slider = () => {
       >
         <IconButton
           onClick={handlePrev}
+          aria-label="Previous slide"
           sx={{
             bgcolor: "white",
             border: "1px solid #ccc",
@@ -155,6 +232,7 @@ const Slider = () => {
         </IconButton>
         <IconButton
           onClick={handleNext}
+          aria-label="Next slide"
           sx={{
             bgcolor: "black",
             color: "white",
