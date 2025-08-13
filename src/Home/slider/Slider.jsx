@@ -17,7 +17,7 @@ const IMAGES = [
 
 const SLIDE_INTERVAL = 3000;
 const TRANSITION_DURATION = 500;
-const SLIDER_HEIGHT = 400;
+const SLIDER_HEIGHT = 500;
 
 const Slider = () => {
   const [current, setCurrent] = useState(1); 

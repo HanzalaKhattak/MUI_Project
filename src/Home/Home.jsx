@@ -1,11 +1,15 @@
 import React from 'react'
 import Slider from './slider/Slider'
+import TrackOrder from './trackYourOrder/TrackOrder'
+
 
 const Home = () => {
   return (
     <>
-      {/* <h1>Home</h1> */}
-      <Slider/>
+      <div className='flex flex-col gap-20'>
+        <Slider/>
+        <TrackOrder/>
+      </div>
     </>
   )
 }
