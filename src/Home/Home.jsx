@@ -1,10 +1,10 @@
 import React from 'react'
-import Toolkit from '../components/Toolkit'
+import Toolkit from '../reuseableComponents/Toolkit'
 
 const Home = () => {
   return (
     <>
-      <Toolkit/>
+      <h1>Home</h1>
     </>
   )
 }

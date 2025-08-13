@@ -1,12 +1,18 @@
-import React from 'react'
-import Home from './pages/Home'
-import { Container } from '@mui/material'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './reuseableComponents/layout';
+import Home from './Home/Home';
+
 
 const App = () => {
   return (
-    <>
-      <Home />
-    </>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   )
 }
 
