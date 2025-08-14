@@ -1,5 +1,6 @@
 import React from 'react';
 import Toolkit from './Toolkit';
+import Footer from './Footer';
 
 const Layout = ({children}) => (
   <>
@@ -7,6 +8,7 @@ const Layout = ({children}) => (
     <main>
       {children}
     </main>
+    <Footer/>
   </>
 );
 
