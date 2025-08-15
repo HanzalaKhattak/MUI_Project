@@ -7,7 +7,7 @@ const Offers = () => {
   const { mainBanner, sideBanners } = offersData;
 
   return (
-    <Box sx={{ p: 4, display:'flex', justifyContent:'center', alignItems:'center'}}>
+    <Box sx={{display:'flex', justifyContent:'center', alignItems:'center'}}>
     <Box>
         <Grid container spacing={2}>
         {/* Left Side - Main Banner */}
@@ -46,7 +46,7 @@ const Offers = () => {
         </Grid>
 
         {/* Right Side - Three Small Banners */}
-        <Grid item xs={12} md={4} container direction="column" spacing={2} sx={{width:500}}>
+        <Grid item xs={12} md={4} container direction="column" spacing={2} sx={{width:600}}>
           {sideBanners.map((banner, index) => (
             <Grid item key={index}>
               <Card

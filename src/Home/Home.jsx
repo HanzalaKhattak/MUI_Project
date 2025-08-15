@@ -7,6 +7,7 @@ import RecentProducts from './recentProducts/RecentProducts'
 import Deals from './Deals/Deals'
 import Categories from './categories/Categories'
 import Offers from './offers/Offers'
+import OffersProducts from './offersProducts/OffersProducts'
 
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
         <Deals/>
         <Categories/>
         <Offers/>
+        <OffersProducts/>
         <RecentProducts/>
       </Box>
     </>

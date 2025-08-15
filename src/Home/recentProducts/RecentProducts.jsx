@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { Box, Container, Typography, Divider, IconButton } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
@@ -15,23 +14,68 @@ const RecentProducts = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollContainerRef = useRef(null);
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
   
   // Constants for card sizing and spacing
   const CARD_WIDTH = 205;
   const CARD_GAP = 16;
-  const CARDS_PER_VIEW = 3.5; // Show 3 full cards + half of the next one
+  const CARDS_PER_VIEW = 3.5; // Show 3.5 cards when at last position for visual cue
   
-  const maxIndex = Math.max(0, products.length - Math.floor(CARDS_PER_VIEW));
+  const maxIndex = useMemo(() => {
+    // Allow one extra scroll position to show half card on left
+    return Math.max(0, products.length - Math.floor(CARDS_PER_VIEW));
+  }, []);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (isScrolling) return;
     setCurrentIndex(prev => Math.max(0, prev - 1));
-  };
+  }, [isScrolling]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (isScrolling) return;
     setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
-  };
+  }, [isScrolling, maxIndex]);
+
+  const handleTouchStart = useCallback((e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    // Only allow swipe if not at boundaries (no looping)
+    if (isLeftSwipe && currentIndex < maxIndex) {
+      handleNext();
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      handlePrevious();
+    }
+  }, [currentIndex, maxIndex, handleNext, handlePrevious]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Only allow keyboard navigation if not at boundaries (no looping)
+      if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        e.preventDefault();
+        handlePrevious();
+      } else if (e.key === 'ArrowRight' && currentIndex < maxIndex) {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handlePrevious, handleNext, currentIndex, maxIndex]);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -54,15 +98,15 @@ const RecentProducts = () => {
   const visibleProducts = products;
 
   return (
-    <>
-      <Box sx={{ height: 600, pl:4, pt:4, pb:4}}>
+    <Container maxWidth="xl" sx={{ overflow: 'hidden' }}>
+      <Box sx={{ height: 600, pl: 4, pt: 4, pb: 4, overflow: 'hidden' }}>
           {/* Main horizontal layout */}
-          <Box sx={{ display: "flex", gap: 4, alignItems: "flex-start" }}>
+          <Box sx={{ display: "flex", gap: 4, alignItems: "flex-start", minWidth: 0 }}>
             {/* Hero Section */}
             <Box
               sx={{
                 backgroundImage: `url(${image1})`,
-                width: 400,
+                width: { xs: 300, md: 400 }, // Responsive width
                 height: 500,
                 textAlign: "center",
                 pt: 5,
@@ -82,11 +126,12 @@ const RecentProducts = () => {
             </Box>
 
             {/* Products Section */}
-            <Box sx={{ flex: 1 }}>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
               {/* Products Container */}
               <Box sx={{ 
                 position: 'relative', 
                 width: CARDS_PER_VIEW * CARD_WIDTH + (Math.floor(CARDS_PER_VIEW) * CARD_GAP),
+                maxWidth: '100%',
                 overflow: 'hidden'
               }}>
                 <Box 
@@ -94,7 +139,6 @@ const RecentProducts = () => {
                   sx={{ 
                     display: "flex", 
                     gap: 2, 
-                    // mb: 3,
                     overflowX: 'hidden',
                     scrollBehavior: 'smooth',
                     '&::-webkit-scrollbar': {
@@ -103,6 +147,9 @@ const RecentProducts = () => {
                     msOverflowStyle: 'none',
                     scrollbarWidth: 'none'
                   }}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
                 >
                   {visibleProducts.map((product) => (
                     <Box key={product.id} sx={{ 
@@ -249,33 +296,35 @@ const RecentProducts = () => {
                 alignItems: "center",
                 mt: 1
               }}>
-                <Box sx={{ display: "flex", gap: 1 }}>
-                  {Array.from({ length: maxIndex + 1 }, (_, i) => (
+                <Box sx={{ display: "flex", gap: 0.5 }}>
+                  {Array.from({ length: maxIndex + 1 }, (_, index) => (
                     <Box
-                      key={i}
-                      onClick={() => setCurrentIndex(i)}
+                      key={index}
                       sx={{
-                        width: 10,
-                        height: 10,
+                        width: 8,
+                        height: 8,
                         borderRadius: "50%",
-                        bgcolor: currentIndex === i ? "#222" : "#ccc",
+                        backgroundColor: index === currentIndex ? 'black' : 'grey.300',
                         cursor: "pointer",
                         transition: 'background-color 0.2s ease'
                       }}
+                      onClick={() => setCurrentIndex(index)}
                     />
                   ))}
                 </Box>
 
-                <Box sx={{ display: "flex", gap: 1, }}>
+                <Box sx={{ display: "flex", gap: 1 }}>
                   <IconButton
                     onClick={handlePrevious}
                     disabled={currentIndex === 0}
                     sx={{
-                      bgcolor: "#f5f5f5",
+                      bgcolor: "white",
+                      color: "black",
+                      border: "1px solid black",
                       width: 40,
                       height: 40,
-                      "&:hover": { bgcolor: "#e0e0e0" },
-                      "&:disabled": { opacity: 0.5 }
+                      "&:hover": { bgcolor: "grey.100" },
+                      "&.Mui-disabled": { opacity: 0.5 }
                     }}
                   >
                     <ArrowBackIos sx={{ fontSize: 20 }} />
@@ -285,12 +334,13 @@ const RecentProducts = () => {
                     onClick={handleNext}
                     disabled={currentIndex >= maxIndex}
                     sx={{
-                      bgcolor: "#222",
+                      bgcolor: "black",
                       color: "white",
+                      border: "1px solid #ccc",
                       width: 40,
                       height: 40,
-                      "&:hover": { bgcolor: "#333" },
-                      "&:disabled": { opacity: 0.5 }
+                      "&:hover": { bgcolor: "grey.800" },
+                      "&.Mui-disabled": { opacity: 0.5 }
                     }}
                   >
                     <ArrowForwardIos sx={{ fontSize: 20 }} />
@@ -300,7 +350,7 @@ const RecentProducts = () => {
             </Box>
           </Box>
       </Box>
-    </>
+    </Container>
   );
 };
 

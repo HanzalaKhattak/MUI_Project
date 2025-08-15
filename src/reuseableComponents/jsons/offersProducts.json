@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Product Name",
+    "label": "Label No.1",
+    "price": 20,
+    "oldPrice": 30,
+    "rating": 4.5,
+    "reviews": 20,
+    "img": "https://via.placeholder.com/150/FF0000/FFFFFF?text=Product1"
+  },
+  {
+    "id": 2,
+    "name": "Product Name",
+    "label": "Label No.2",
+    "price": 15,
+    "oldPrice": 25,
+    "rating": 4,
+    "reviews": 18,
+    "img": "https://via.placeholder.com/150/00FF00/FFFFFF?text=Product2"
+  },
+  {
+    "id": 3,
+    "name": "Product Name",
+    "label": "Label No.3",
+    "price": 12,
+    "oldPrice": 22,
+    "rating": 3.5,
+    "reviews": 10,
+    "img": "https://via.placeholder.com/150/0000FF/FFFFFF?text=Product3"
+  },
+  {
+    "id": 4,
+    "name": "Product Name",
+    "label": "Label No.3",
+    "price": 12,
+    "oldPrice": 22,
+    "rating": 3.5,
+    "reviews": 10,
+    "img": "https://via.placeholder.com/150/0000FF/FFFFFF?text=Product3"
+  },
+  {
+    "id": 5,
+    "name": "Product Name",
+    "label": "Label No.3",
+    "price": 12,
+    "oldPrice": 22,
+    "rating": 3.5,
+    "reviews": 10,
+    "img": "https://via.placeholder.com/150/0000FF/FFFFFF?text=Product3"
+  },
+  {
+    "id": 6,
+    "name": "Product Name",
+    "label": "Label No.3",
+    "price": 12,
+    "oldPrice": 22,
+    "rating": 3.5,
+    "reviews": 10,
+    "img": "https://via.placeholder.com/150/0000FF/FFFFFF?text=Product3"
+  },
+  {
+    "id": 7,
+    "name": "Product Name",
+    "label": "Label No.3",
+    "price": 12,
+    "oldPrice": 22,
+    "rating": 3.5,
+    "reviews": 10,
+    "img": "https://via.placeholder.com/150/0000FF/FFFFFF?text=Product3"
+  },
+  {
+    "id": 8,
+    "name": "Premium Product",
+    "label": "Limited Edition",
+    "price": 45,
+    "oldPrice": 65,
+    "rating": 4.8,
+    "reviews": 35,
+    "img": "https://via.placeholder.com/150/FF6B35/FFFFFF?text=Product8"
+  },
+  {
+    "id": 9,
+    "name": "Popular Choice",
+    "label": "Best Seller",
+    "price": 28,
+    "oldPrice": 40,
+    "rating": 4.2,
+    "reviews": 52,
+    "img": "https://via.placeholder.com/150/9B59B6/FFFFFF?text=Product9"
+  },
+  {
+    "id": 10,
+    "name": "Budget Special",
+    "label": "Great Value",
+    "price": 8,
+    "oldPrice": 15,
+    "rating": 3.8,
+    "reviews": 24,
+    "img": "https://via.placeholder.com/150/1ABC9C/FFFFFF?text=Product10"
+  }
+]
