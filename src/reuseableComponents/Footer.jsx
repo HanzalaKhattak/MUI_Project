@@ -70,7 +70,6 @@ const Footer = () => {
               </Typography>
             </Box>
 
-            {/* Mobile App Download Buttons */}
             <Box>
               <Box sx={{display: 'flex', 
                 gap:4

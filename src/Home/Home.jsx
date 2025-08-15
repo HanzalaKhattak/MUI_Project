@@ -3,6 +3,7 @@ import { Box } from '@mui/material'
 import Slider from './slider/Slider'
 import TrackOrder from './trackYourOrder/TrackOrder'
 import BuyAgain from './buyAgain/BuyAgain'
+import RecentProducts from './recentProducts/RecentProducts'
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         <Slider/>
         <TrackOrder/>
         <BuyAgain/>
+        <RecentProducts/>
       </Box>
     </>
   )
