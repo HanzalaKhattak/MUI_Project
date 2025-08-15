@@ -4,6 +4,8 @@ import Slider from './slider/Slider'
 import TrackOrder from './trackYourOrder/TrackOrder'
 import BuyAgain from './buyAgain/BuyAgain'
 import RecentProducts from './recentProducts/RecentProducts'
+import Categories from './categories/Categories'
+import Deals from './Deals/Deals'
 
 
 const Home = () => {
@@ -13,6 +15,8 @@ const Home = () => {
         <Slider/>
         <TrackOrder/>
         <BuyAgain/>
+        <Deals/>
+        <Categories/>
         <RecentProducts/>
       </Box>
     </>

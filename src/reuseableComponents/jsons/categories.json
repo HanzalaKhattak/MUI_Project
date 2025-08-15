@@ -1,0 +1,22 @@
+[
+  { "id": 1, "name": "Electronics", "img": "https://unsplash.com/s/photos/free-images" },
+  { "id": 2, "name": "Fashion", "img": "https://via.placeholder.com/150?text=Fashion" },
+  { "id": 3, "name": "Home & Kitchen", "img": "https://via.placeholder.com/150?text=Home+%26+Kitchen" },
+  { "id": 4, "name": "Beauty", "img": "https://via.placeholder.com/150?text=Beauty" },
+  { "id": 5, "name": "Toys", "img": "https://via.placeholder.com/150?text=Toys" },
+  { "id": 6, "name": "Sports", "img": "https://via.placeholder.com/150?text=Sports" },
+  { "id": 7, "name": "Books", "img": "https://via.placeholder.com/150?text=Books" },
+  { "id": 8, "name": "Groceries", "img": "https://via.placeholder.com/150?text=Groceries" },
+  { "id": 9, "name": "Pets", "img": "https://via.placeholder.com/150?text=Pets" },
+  { "id": 10, "name": "Automotive", "img": "https://via.placeholder.com/150?text=Automotive" },
+  { "id": 11, "name": "Furniture", "img": "https://via.placeholder.com/150?text=Furniture" },
+  { "id": 12, "name": "Jewelry", "img": "https://via.placeholder.com/150?text=Jewelry" },
+  { "id": 13, "name": "Health", "img": "https://via.placeholder.com/150?text=Health" },
+  { "id": 14, "name": "Music", "img": "https://via.placeholder.com/150?text=Music" },
+  { "id": 15, "name": "Movies", "img": "https://via.placeholder.com/150?text=Movies" },
+  { "id": 16, "name": "Gaming", "img": "https://via.placeholder.com/150?text=Gaming" },
+  { "id": 17, "name": "Office Supplies", "img": "https://via.placeholder.com/150?text=Office+Supplies" },
+  { "id": 18, "name": "Garden", "img": "https://via.placeholder.com/150?text=Garden" },
+  { "id": 19, "name": "Travel", "img": "https://via.placeholder.com/150?text=Travel" },
+  { "id": 20, "name": "Tools", "img": "https://via.placeholder.com/150?text=Tools" }
+]
