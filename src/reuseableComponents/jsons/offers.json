@@ -1,0 +1,24 @@
+{
+  "mainBanner": {
+    "title": "Offers Banner",
+    "img": "https://via.placeholder.com/600x300",
+    "cta": "Call To Action"
+  },
+  "sideBanners": [
+    {
+      "title": "Offers Banner",
+      "img": "https://via.placeholder.com/300x100",
+      "cta": "Call To Action"
+    },
+    {
+      "title": "Offers Banner",
+      "img": "https://via.placeholder.com/300x100",
+      "cta": "Call To Action"
+    },
+    {
+      "title": "Offers Banner",
+      "img": "https://via.placeholder.com/300x100",
+      "cta": "Call To Action"
+    }
+  ]
+}

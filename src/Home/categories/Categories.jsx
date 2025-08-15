@@ -5,17 +5,16 @@ import categories from '../../reuseableComponents/jsons/categories.json';
 const Categories = () => {
   const [showAll, setShowAll] = useState(false);
 
-  // Toggle categories
+
   const handleToggle = () => {
     setShowAll((prev) => !prev);
   };
 
-  // Categories to display
   const displayedCategories = showAll ? categories : categories.slice(0, 16);
 
   return (
     <Box sx={{ py: 4, backgroundColor: '#fafafa' }}>
-      {/* Title */}
+
       <Typography
         variant="h5"
         align="center"
@@ -25,14 +24,14 @@ const Categories = () => {
         Categories
       </Typography>
 
-      {/* Categories Grid */}
+
       <Grid container spacing={2} justifyContent="center">
         {displayedCategories.map((cat) => (
           <Grid item xs={6} sm={3} md={2} key={cat.id}>
             <Card
               sx={{
-                width: '140px', // Fixed width
-                height: '160px', // Fixed height
+                width: '140px',
+                height: '160px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
@@ -75,7 +74,6 @@ const Categories = () => {
         ))}
       </Grid>
 
-      {/* Show More / Show Less Button */}
       {categories.length > 16 && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
           <Button
